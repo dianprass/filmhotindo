@@ -1,74 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Mengalihkan...</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 40px;
-      }
-      .btn {
-        display: inline-block;
-        margin-top: 20px;
-        padding: 15px 25px;
-        background: #dc3545; /* merah */
-        color: #fff;
-        font-size: 18px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-        animation: blink 1s infinite, shake 1.5s infinite;
-      }
-      @keyframes blink {
-        0%, 50%, 100% { opacity: 1; }
-        25%, 75% { opacity: 0.6; }
-      }
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20% { transform: translateX(-5px); }
-        40% { transform: translateX(5px); }
-        60% { transform: translateX(-5px); }
-        80% { transform: translateX(5px); }
-      }
-      .warning {
-        background: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px auto;
-        max-width: 500px;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>🔗 Klik tombol di bawah untuk membuka link</h2>
-    <a class="btn" href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">Buka di Browser</a>
+<head>
+  <meta charset="UTF-8" />
+  <title>Mengalihkan...</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 25px;
+      background: #dc3545; /* merah */
+      color: #fff;
+      font-size: 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      animation: blink 1s infinite, shake 1.5s infinite;
+    }
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0.6; }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔗 Klik tombol di bawah untuk membuka link</h2>
+  <a id="mainBtn" class="btn" href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">Buka di Browser</a>
 
-    <div class="warning" id="inAppWarning" style="display:none;">
-      <h3>⚠️ Peringatan</h3>
-      <p>🚫 Jangan buka di aplikasi sosmed.<br>
-         👉 Biar lu enak nontonnya buka di <b>Chrome</b> aja!</p>
-      <a class="btn" href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">Buka di Browser</a>
-    </div>
+  <div class="warning" id="inAppWarning" style="display:none;">
+    <h3>⚠️ Peringatan</h3>
+    <p id="warnText"></p>
+    <a id="inAppBtn" class="btn" href="#">Buka di Browser</a>
+  </div>
 
-    <script>
-      function isInAppBrowser() {
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
-        return /FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Messenger/i.test(ua);
-      }
+  <script>
+    const linkNormal = "https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html";
+    const linkIntent = "intent://nonton.filmhotindo.workers.dev/ADN639#Intent;scheme=https;package=com.android.chrome;end";
 
-      document.addEventListener("DOMContentLoaded", () => {
-        if (isInAppBrowser()) {
-          // Sembunyikan tombol normal
-          document.querySelector("h2").style.display = "none";
-          document.querySelector(".btn").style.display = "none";
-          // Tampilkan warning
-          document.getElementById("inAppWarning").style.display = "block";
+    function isInAppBrowser() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      return /FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Messenger/i.test(ua);
+    }
+
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (isInAppBrowser()) {
+        // sembunyikan tombol normal
+        document.querySelector("h2").style.display = "none";
+        document.getElementById("mainBtn").style.display = "none";
+
+        // tampilkan warning
+        document.getElementById("inAppWarning").style.display = "block";
+
+        if (isIOS()) {
+          // iOS: tidak bisa pakai intent://
+          document.getElementById("warnText").innerHTML = "🚫 Jangan dibuka di aplikasi sosmed.<br>👉 Biar lu enak nontonnya buka langsung di <b>Safari / Chrome</b> lewat menu titik tiga ⠇.";
+          document.getElementById("inAppBtn").setAttribute("href", linkNormal);
+        } else {
+          // Android: pakai intent:// untuk paksa buka Chrome
+          document.getElementById("warnText").innerHTML = "🚫 Jangan dibuka di aplikasi sosmed.<br>👉 Biar lu enak nontonnya buka di <b>Chrome</b> aja!";
+          document.getElementById("inAppBtn").setAttribute("href", linkIntent);
         }
-      });
-    </script>
-  </body>
+      }
+    });
+  </script>
+</body>
 </html>
