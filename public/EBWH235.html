@@ -3,12 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <title>Mengalihkan...</title>
-    <meta http-equiv="refresh" content="0;url=https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 40px;
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 25px;
+        background: #dc3545; /* merah */
+        color: #fff;
+        font-size: 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        animation: blink 1s infinite, shake 1.5s infinite;
+      }
+      @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0.6; }
+      }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-5px); }
+        40% { transform: translateX(5px); }
+        60% { transform: translateX(-5px); }
+        80% { transform: translateX(5px); }
+      }
+      .warning {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 500px;
+      }
+    </style>
   </head>
   <body>
-    <p>Mengalihkan... Jika tidak otomatis, 
-      <a href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">klik di sini</a>.
-    </p>
+    <h2>🔗 Klik tombol di bawah untuk membuka link</h2>
+    <a class="btn" href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">Buka di Browser</a>
+
+    <div class="warning" id="inAppWarning" style="display:none;">
+      <h3>⚠️ Peringatan</h3>
+      <p>🚫 Jangan buka di aplikasi sosmed.<br>
+         👉 Biar lu enak nontonnya buka di <b>Chrome</b> aja!</p>
+      <a class="btn" href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">Buka di Browser</a>
+    </div>
 
     <script>
       function isInAppBrowser() {
@@ -16,24 +60,15 @@
         return /FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Messenger/i.test(ua);
       }
 
-      if (isInAppBrowser()) {
-        document.addEventListener('DOMContentLoaded', () => {
-          const android = /Android/i.test(navigator.userAgent);
-          document.body.innerHTML = `
-            <div style="text-align:center;padding:30px;font-family:Arial,sans-serif;">
-              <h2>⚠️ Peringatan</h2>
-              <p style="font-size:18px;">
-                🚫 Jangan dibuka di aplikasi sosmed.<br>
-                👉 Biar lu enak nontonnya buka di <b>Chrome</b> aja!
-              </p>
-              <a href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html" 
-                 style="display:inline-block;margin-top:15px;padding:10px 20px;background:#007bff;color:#fff;text-decoration:none;border-radius:6px;">
-                 Buka di Chrome
-              </a>
-            </div>
-          `;
-        });
-      }
+      document.addEventListener("DOMContentLoaded", () => {
+        if (isInAppBrowser()) {
+          // Sembunyikan tombol normal
+          document.querySelector("h2").style.display = "none";
+          document.querySelector(".btn").style.display = "none";
+          // Tampilkan warning
+          document.getElementById("inAppWarning").style.display = "block";
+        }
+      });
     </script>
   </body>
 </html>
