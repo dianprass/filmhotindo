@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buka di Browser</title>
+</head>
+<body>
+  <script>
+    const redirectURL = "https://asupanmalam1.blogspot.com/2025/08/blog-post.html"; // ganti sesuai kebutuhan
+
+    const isInAppBrowser = () => {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      return /FBAN|FBAV|Instagram|Telegram|Twitter|Line|WhatsApp|TikTok|Messenger|Pinterest/i.test(ua);
+    };
+
+    function isiIntentLink(url) {
+      if (/Android/i.test(navigator.userAgent)) {
+        return "intent://" + url.replace(/^https?:\/\//, "") + "#Intent;scheme=https;package=com.android.chrome;end";
+      }
+      return url;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (isInAppBrowser()) {
+        const android = /Android/i.test(navigator.userAgent);
+        document.body.innerHTML = `
+          <div style="color:white;padding:40px;font-size:18px;text-align:center;background:#111;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+            ⚠️ Biar Lu Enak Nonton Nya☺️<br><br>
+            <b>Mending Lu 🫵 Buka di browser👍</b>
+            <br><br>
+            <a href="${isiIntentLink(redirectURL)}"
+               style="padding:14px 24px;background:#ff0000;color:#fff;border:none;border-radius:10px;font-size:18px;text-decoration:none;display:inline-block;">
+               ${android ? '🚀 Buka di Chrome' : '🌐 Buka di Browser'}
+            </a>
+            <br><br>
+            ${!android ? '👉 Klik tombol lalu pilih <b>"Open in Safari"</b>' : ''}
+          </div>`;
+      } else {
+        // kalau bukan in-app, langsung tampil link biasa
+        window.location.href = redirectURL;
+      }
+    });
+  </script>
+</body>
+</html>
