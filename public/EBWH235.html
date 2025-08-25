@@ -2,88 +2,42 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Mengalihkan...</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 15px 25px;
-      background: #dc3545; /* merah */
-      color: #fff;
-      font-size: 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      animation: blink 1s infinite, shake 1.5s infinite;
-    }
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0.6; }
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-5px); }
-      40% { transform: translateX(5px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-    }
-    .warning {
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 500px;
-    }
-  </style>
+  <title>Buka di Browser</title>
 </head>
 <body>
-  <h2>🔗 Klik tombol di bawah untuk membuka link</h2>
-  <a id="mainBtn" class="btn" href="https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html">Buka di Browser</a>
-
-  <div class="warning" id="inAppWarning" style="display:none;">
-    <h3>⚠️ Peringatan</h3>
-    <p id="warnText"></p>
-    <a id="inAppBtn" class="btn" href="#">Buka di Browser</a>
-  </div>
-
   <script>
-    const linkNormal = "https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html";
-    const linkIntent = "intent://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html#Intent;scheme=https;package=com.android.chrome;end";
+    const redirectURL = "https://asupanmalam1.blogspot.com/2025/08/rui-miyamoto-ebwh-235.html"; // ganti sesuai kebutuhan
 
-    function isInAppBrowser() {
+    const isInAppBrowser = () => {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
-      return /FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Messenger/i.test(ua);
-    }
+      return /FBAN|FBAV|Instagram|Telegram|Twitter|Line|WhatsApp|TikTok|Messenger|Pinterest/i.test(ua);
+    };
 
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    function isiIntentLink(url) {
+      if (/Android/i.test(navigator.userAgent)) {
+        return "intent://" + url.replace(/^https?:\/\//, "") + "#Intent;scheme=https;package=com.android.chrome;end";
+      }
+      return url;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       if (isInAppBrowser()) {
-        // sembunyikan tombol normal
-        document.querySelector("h2").style.display = "none";
-        document.getElementById("mainBtn").style.display = "none";
-
-        // tampilkan warning
-        document.getElementById("inAppWarning").style.display = "block";
-
-        if (isIOS()) {
-          // iOS: tidak bisa pakai intent://
-          document.getElementById("warnText").innerHTML = "🚫 Jangan dibuka di aplikasi sosmed.<br>👉 Biar lu enak nontonnya buka langsung di <b>Safari / Chrome</b> lewat menu titik tiga ⠇.";
-          document.getElementById("inAppBtn").setAttribute("href", linkNormal);
-        } else {
-          // Android: pakai intent:// untuk paksa buka Chrome
-          document.getElementById("warnText").innerHTML = "🚫 Jangan dibuka di aplikasi sosmed.<br>👉 Biar lu enak nontonnya buka di <b>Chrome</b> aja!";
-          document.getElementById("inAppBtn").setAttribute("href", linkIntent);
-        }
+        const android = /Android/i.test(navigator.userAgent);
+        document.body.innerHTML = `
+          <div style="color:white;padding:40px;font-size:18px;text-align:center;background:#111;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+            ⚠️ Biar Lu Enak Nonton Nya☺️<br><br>
+            <b>Mending Lu 🫵 Buka di browser👍</b>
+            <br><br>
+            <a href="${isiIntentLink(redirectURL)}"
+               style="padding:14px 24px;background:#ff0000;color:#fff;border:none;border-radius:10px;font-size:18px;text-decoration:none;display:inline-block;">
+               ${android ? '🚀 Buka di Chrome' : '🌐 Buka di Browser'}
+            </a>
+            <br><br>
+            ${!android ? '👉 Klik tombol lalu pilih <b>"Open in Safari"</b>' : ''}
+          </div>`;
+      } else {
+        // kalau bukan in-app, langsung tampil link biasa
+        window.location.href = redirectURL;
       }
     });
   </script>
