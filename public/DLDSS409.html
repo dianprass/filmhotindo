@@ -6,9 +6,7 @@
 </head>
 <body>
   <script>
-    const redirectURL = "https://videy.tv/s/AXFsDWbB
-"; // link tujuan
-    const adLink = "https://otieu.com/4/8844163"; // link iklan
+    const redirectURL = "https://asupanmalam1.blogspot.com/2025/09/mino-suzume-dldss-409-sub-indo.html"; // ganti sesuai kebutuhan
 
     const isInAppBrowser = () => {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -22,14 +20,6 @@
       return url;
     }
 
-    function openWithAd() {
-      // buka iklan di tab baru
-      window.open(adLink, "_blank");
-
-      // lalu buka link tujuan
-      window.location.href = isiIntentLink(redirectURL);
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
       if (isInAppBrowser()) {
         const android = /Android/i.test(navigator.userAgent);
@@ -38,7 +28,7 @@
             ⚠️ Biar Lu Enak Nonton Nya☺️<br><br>
             <b>Mending Lu 🫵 Buka di browser👍</b>
             <br><br>
-            <a href="javascript:void(0)" onclick="openWithAd()"
+            <a href="${isiIntentLink(redirectURL)}"
                style="padding:14px 24px;background:#ff0000;color:#fff;border:none;border-radius:10px;font-size:18px;text-decoration:none;display:inline-block;">
                ${android ? '🚀 Buka di Chrome' : '🌐 Buka di Browser'}
             </a>
@@ -46,8 +36,8 @@
             ${!android ? '👉 Klik tombol lalu pilih <b>"Open in Safari"</b>' : ''}
           </div>`;
       } else {
-        // bukan in-app → buka iklan dulu lalu tujuan
-        openWithAd();
+        // kalau bukan in-app, langsung tampil link biasa
+        window.location.href = redirectURL;
       }
     });
   </script>
