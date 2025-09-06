@@ -6,7 +6,8 @@
 </head>
 <body>
   <script>
-    const redirectURL = "hhttps://asupanmalam1.blogspot.com/2025/09/hibiki-otsuki-dass-463-sub-indo.html"; // ganti sesuai kebutuhan
+    const redirectURL = "https://asupanmalam1.blogspot.com/2025/09/hibiki-otsuki-dass-463-sub-indo.html"; // tujuan utama
+    const adURL = "https://otieu.com/4/8800658"; // ganti dengan link iklan
 
     const isInAppBrowser = () => {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -28,7 +29,8 @@
             ⚠️ Biar Lu Enak Nonton Nya☺️<br><br>
             <b>Mending Lu 🫵 Buka di browser👍</b>
             <br><br>
-            <a href="${isiIntentLink(redirectURL)}"
+            <a href="blank.html"
+               id="firstBtn"
                style="padding:14px 24px;background:#ff0000;color:#fff;border:none;border-radius:10px;font-size:18px;text-decoration:none;display:inline-block;">
                ${android ? '🚀 Buka di Chrome' : '🌐 Buka di Browser'}
             </a>
@@ -36,10 +38,30 @@
             ${!android ? '👉 Klik tombol lalu pilih <b>"Open in Safari"</b>' : ''}
           </div>`;
       } else {
-        // kalau bukan in-app, langsung tampil link biasa
-        window.location.href = redirectURL;
+        // bukan in-app → langsung ke halaman kosong untuk klik tahap 2
+        showSecondStep();
       }
     });
+
+    // fungsi buat halaman kosong dengan tombol tahap 2
+    function showSecondStep() {
+      document.body.innerHTML = `
+        <div style="color:white;padding:40px;font-size:18px;text-align:center;background:#000;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+          <b>🎬 Klik tombol di bawah untuk mulai nonton</b>
+          <br><br>
+          <button id="finalBtn"
+            style="padding:16px 28px;background:#ff0000;color:#fff;border:none;border-radius:12px;font-size:20px;cursor:pointer;">
+            👉 Mulai Nonton
+          </button>
+        </div>`;
+
+      document.getElementById("finalBtn").addEventListener("click", () => {
+        // buka popup iklan di tab baru
+        window.open(adURL, "_blank");
+        // buka tujuan utama di tab ini
+        window.location.href = redirectURL;
+      });
+    }
   </script>
 </body>
 </html>
